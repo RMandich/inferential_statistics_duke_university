@@ -1,0 +1,4 @@
+"0",""
+"0","ames %>%"
+"0","  sample_n(size = 50) %>%"
+"0","  summarise(x_bar = mean(price))"

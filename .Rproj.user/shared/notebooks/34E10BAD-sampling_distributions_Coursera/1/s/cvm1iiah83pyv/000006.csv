@@ -1,0 +1,7 @@
+"0",""
+"0","samp1 %>%"
+"0","  summarise(mean_samp = mean(area), median_samp = median(area), "
+"0","            stddev_samp = sd(area), iqr_samp = IQR(area),"
+"0","            min_samp = min(area), max_samp = max(area),"
+"0","            q1_samp = quantile(area, 0.25),  # first quartile, 25th percentile"
+"0","            q3_samp = quantile(area, 0.75))  # third quartile, 75th percentile"

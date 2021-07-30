@@ -1,0 +1,2 @@
+"0","ggplot(data = samp1, aes(x = area)) +"
+"0","  geom_histogram(binwidth = 250)"

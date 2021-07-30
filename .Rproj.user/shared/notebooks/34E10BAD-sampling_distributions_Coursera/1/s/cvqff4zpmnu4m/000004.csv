@@ -1,0 +1,7 @@
+"0","sample_means150_price <- ames %>%"
+"0","                    rep_sample_n(size = 150, reps = 5000, replace = TRUE) %>%"
+"0","                    summarise(x_bar = mean(price))"
+"0",""
+"0","ggplot(data = sample_means150_price, aes(x = x_bar)) +"
+"0","  geom_histogram(binwidth = 3000)"
+"0",""

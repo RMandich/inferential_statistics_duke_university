@@ -1,0 +1,5 @@
+"0","sample_means_small <- ames %>%"
+"0","                    rep_sample_n(size = 10, reps = 25, replace = TRUE)%>%"
+"0","                    summarise(x_bar = mean(area))"
+"0",""
+"0","sample_means_small"

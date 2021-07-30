@@ -1,0 +1,2 @@
+"0","samp1 %>%"
+"0","  summarise(x_bar = mean(area))"

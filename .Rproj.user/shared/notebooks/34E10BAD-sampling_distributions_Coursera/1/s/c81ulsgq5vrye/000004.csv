@@ -1,0 +1,2 @@
+"0","sample_means15 %>%"
+"0","  summarise(stddev = sd(x_bar))"

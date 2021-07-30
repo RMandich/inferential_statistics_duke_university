@@ -1,0 +1,3 @@
+"0",""
+"0","sample_means150 %>%"
+"0","  summarise(stddev = sd(x_bar))"

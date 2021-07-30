@@ -1,0 +1,6 @@
+"0","sample_means50 <- ames %>%"
+"0","                    rep_sample_n(size = 50, reps = 15000, replace = TRUE) %>%"
+"0","                    summarise(x_bar = mean(area))"
+"0",""
+"0","ggplot(data = sample_means50, aes(x = x_bar)) +"
+"0","  geom_histogram(binwidth = 20)"

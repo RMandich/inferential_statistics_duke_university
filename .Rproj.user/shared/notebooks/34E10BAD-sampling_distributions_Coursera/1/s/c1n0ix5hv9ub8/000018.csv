@@ -1,0 +1,7 @@
+"0",""
+"0","sample_means50 %>%"
+"0","  summarise(mean_samp = mean(x_bar), median_samp = median(x_bar), "
+"0","            stddev_samp = sd(x_bar), iqr_samp = IQR(x_bar),"
+"0","            min_samp = min(x_bar), max_samp = max(x_bar),"
+"0","            q1_samp = quantile(x_bar, 0.25),  # first quartile, 25th percentile"
+"0","            q3_samp = quantile(x_bar, 0.75))  # third quartile, 75th percentile"
