@@ -1,0 +1,122 @@
+---
+title: "Statistical inference with the GSS data"
+output: 
+  html_document: 
+    fig_height: 4
+    highlight: pygments
+    theme: spacelab
+---
+#### Raphael Mandich | 08/29/2021
+## Setup
+
+### Load packages
+
+```{r load-packages, message = FALSE}
+library(ggplot2)
+library(dplyr)
+library(statsr)
+```
+
+### Load data
+
+```{r load-data}
+load("gss.Rdata")
+```
+
+
+
+* * *
+
+## Part 1: Data
+
+The data we are working with for this project is the General Social Survey (GSS), that since 1972, has been monitoring societal change and studying the growing complexity of American society.
+
+GSS topics include national spending priorities, marijuana use, crime, intergroup relations, social and economic life, lifestyle, civil liberties, subjective well-being, and confidence in institutions. Since 1988, the GSS has also collected data on sexual behavior, including number of sex partners, frequency of intercourse, and extramarital relationships.
+
+Until 2020, the responses were collected trough face-to-face interviews, but due to the COVID-19 pandemic, the method was changed to web-based and telephone surveys to protect the health and safety of both the interviewers and survey participants.
+
+Since random sampling was used in order to collect the data for the survey, this data can be generalized and used for inference to the adult population of the US. However, since this is an observational study, no causality can be derived from the research.
+
+Another important thing to notice is that the data extends from 1972 to modern days, and that is a lot of time when it comes to cultural questions. Such a long period of time may generate some bias in the results, and should be taken into account if one intends to do a more serious analysis.
+
+
+* * *
+
+## Part 2: Research question
+
+Gender equality has been a hot topic in recent years. Around the world people have been arguing in favor of equal opportunities for men and women regarding work, education, political rights and several other areas. Following this trend, I would like to verify if a person's biological sex has any influence on how many years of study this person has. Therefore, the research question We'll try to answer in this project is: 
+
+> "Is there any statistically significant difference in the average years of study between men and women?"
+
+
+
+* * *
+
+## Part 3: Exploratory data analysis
+
+To try and answer this question we'll use the following variables:
+
+* __educ__ : A numerical variable that holds the highest year of school completed.
+
+* __sex__ : A categorical variable with two levels, Male and Female
+
+We'll start our analysis subsetting the database to only the variables we are interested in:
+
+```{r}
+question <- gss %>%
+  select(educ, sex) %>%
+  filter(!is.na(educ), !is.na(sex))
+
+summary(question$educ)
+
+summary(question$sex)
+
+```
+The first thing we can notice from our summary statistics is that 75% of the respondents have between 12 and 15 years of study, and also that we have a significantly larger number of Female respondents.
+
+Now let us plot this data into two boxplots to better observe the relations between the variables. We can do that with the following code:
+
+```{r}
+ggplot(question, aes(x=educ, y=sex)) + 
+    geom_boxplot() +
+    labs(x = "Years of study", y = "Gender")
+```
+
+
+We can notice that the years of study for males seems to be a bit more spread, but otherwise the numbers are pretty similar. Another point that comes to mind is that for both males and females the median falls exactly at the 25% percentile, generating a boxplot that is slightly different than what we are used to.
+
+But this analysis is incomplete, in the sample it appears that men in general have more years of study than women, but is this result statistically significant? We'll find out in the next section, while we conduct inference calculation.
+
+* * *
+
+## Part 4: Inference
+
+We want to see if the amount of years of study a person has is somehow related to the biological sex of said person, as stated in our research question. Therefore the hypothesis for our test can be defined as follows:
+
+**Null hypothesis (Ho):** The average number of years of study is the same for males and females. $H_0: \mu_{male} = \mu_{female}$
+
+**Alternative hypothesis (HA):** The average number of years of study is different for males and females. $H_A: \mu_{male} \ne \mu_{female}$
+
+
+The first step before we even begin our inference calculations, is to check if our data meets the conditions for inference, which are:
+
+1. **Independence:** Data from the GSS survey is collected trough random sampling, so it is safe to assume that the respondents are independent from each other. 
+
+2. **Normality:** We have almost 57 thousand observations, which is less than 10% of the US population and also sufficiently large (n > 30) to assume that it's sample means are normally distributed.
+
+With the conditions checked, we proceed with our hypothesis test, using the inference function:
+
+```{r}
+inference(y = educ, x = sex, data = question, statistic = "mean", type = "ht", null = 0, 
+          alternative = "twosided", method = "theoretical")
+```
+
+So following our hypothesis test we got a pretty small p-value, which leads us to reject the null hypothesis on a 5% significance level and proceed with the alternative hypothesis, there is a difference in the years of study of men and women that is not caused by chance. Now let's calculate this difference on a 95% confidence level.
+
+
+```{r}
+inference(y = educ, x = sex, data = question, statistic = "mean", type = "ci", method = "theoretical")
+
+```
+
+This result allows us to say that we are 95% confident that American men study on average between 0.2001 and 0.3067 years more than American women.
